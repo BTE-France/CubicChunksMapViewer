@@ -251,18 +251,24 @@ def validateOutputDir(d):
     return expand_path(d)
 
 def validateBTECrop(value):
+    if not isinstance(value, list):
+        value = [value]
 
-    if not isinstance(value, tuple) or len(value) != 4:
-        raise ValidationException("BTE crop must specify minregionx, minregionz, maxregionx, maxregionz in a tuple of length 4")
+    cropZones = []
+    for zone in value:
+        if not isinstance(zone, tuple) or len(zone) != 4:
+            raise ValidationException("BTE crop must specify minregionx, minregionz, maxregionx, maxregionz in a tuple of length 4")
             
-    a, b, c, d = tuple(int(x) for x in value)
+        a, b, c, d = tuple(int(x) for x in zone)
 
-    if a >= c:
-        a, c = c, a
-    if b >= d:
-        b, d = d, b
+        if a >= c:
+            a, c = c, a
+        if b >= d:
+            b, d = d, b
 
-    return (a, b, c, d)
+        cropZones.append((a, b, c, d))
+
+    return cropZones
 
 def validateCrop(value):
     if not isinstance(value, list):

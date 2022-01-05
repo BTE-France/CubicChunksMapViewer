@@ -93,7 +93,7 @@ class World(object):
 
     """
 
-    def __init__(self, worlddir):
+    def __init__(self, worlddir, BTEcrop):
         self.worlddir = worlddir
         # This list, populated below, will hold RegionSet files that are in
         # this world
@@ -142,7 +142,7 @@ class World(object):
                 # construct a regionset object for this
                 rel = os.path.relpath(root, self.worlddir)
                 if os.path.basename(rel) != "poi":
-                    rset = RegionSet(root, rel)
+                    rset = RegionSet(root, rel, BTEcrop=BTEcrop)
                     if root == os.path.join(self.worlddir, "region3d"):
                         self.regionsets.insert(0, rset)
                     else:
@@ -257,7 +257,7 @@ class RegionSet(object):
 
     """
 
-    def __init__(self, regiondir, rel, regionfiles={}):
+    def __init__(self, regiondir, rel, regionfiles={}, BTEcrop=None):
         """Initialize a new RegionSet to access the region files in the given
         directory.
 
@@ -272,6 +272,7 @@ class RegionSet(object):
         """
         self.regiondir = os.path.normpath(regiondir)
         self.rel = os.path.normpath(rel)
+        self.BTEcrop = BTEcrop
 
         # This is populated below. It is a mapping from (x,y,z) region coords to filename
         self.regionfiles = regionfiles
@@ -298,7 +299,6 @@ class RegionSet(object):
 
         # This holds a cache of open regionfile objects
         self.regioncache = cache.LRUCache(size=16, destructor=lambda regionobj: regionobj.close())
-
         if len(self.regionfiles) == 0:
 
             min_region_y = float("inf")
@@ -1564,7 +1564,7 @@ class RegionSet(object):
         return chunk_data
 
 
-    def iterate_chunks(self):
+    def iterate_chunks(self, BTEcrop):
         """Returns an iterator over all chunk metadata in this world. Iterates
         over tuples of integers (x,y,z,mtime) for each chunk.  Other chunk data
         is not returned here.
@@ -1577,7 +1577,13 @@ class RegionSet(object):
                 logging.warning("Found a corrupt region file at %s,%s in %s, Skipping it.", regionx, regiony, self.regiondir)
                 continue
             for chunkx, chunky, chunkz in mcr.get_chunks():
+                # x, y, z = chunkx+16*regionx, chunky+16*regiony, chunkz+16*regionz
+                    # for (xmin, zmin, xmax, zmax) in BTEcrop:
+                        # if xmin <= x <= xmax and zmin <= z <= zmax:
+                            # yield x, y, z, mcr.get_chunk_timestamp(chunkx, chunky, chunkz)
+                            # break
                 yield chunkx+16*regionx, chunky+16*regiony, chunkz+16*regionz, mcr.get_chunk_timestamp(chunkx, chunky, chunkz)
+                
 
     def iterate_newer_chunks(self, mtime):
         """Returns an iterator over all chunk metadata in this world. Iterates
@@ -1656,7 +1662,11 @@ class RegionSet(object):
                 if abs(x) > 500000 or abs(y) > 500000:
                     logging.warning("Holy shit what is up with region file %s !?" % f)
                 else:
-                    yield (x, y, z, os.path.join(self.regiondir, f))
+                    for (xmin, zmin, xmax, zmax) in self.BTEcrop:
+                        if xmin // 16 <= x <= xmax // 16 and zmin // 16 <= z <= zmax // 16:
+                            # print(x, y, z)
+                            yield (x, y, z, os.path.join(self.regiondir, f))
+                            break
 
 
 class RegionSetWrapper(object):
@@ -1700,8 +1710,8 @@ class RegionSetWrapper(object):
         return self._r.get_biome_data(x,y,z)
     def get_chunk(self, x, y, z):
         return self._r.get_chunk(x,y,z)
-    def iterate_chunks(self):
-        return self._r.iterate_chunks()
+    def iterate_chunks(self, BTEcrop):
+        return self._r.iterate_chunks(BTEcrop)
     def iterate_newer_chunks(self,filemtime):
         return self._r.iterate_newer_chunks(filemtime)
     def get_chunk_mtime(self, x, y, z):
@@ -1744,6 +1754,7 @@ class RotatedRegionSet(RegionSetWrapper):
 
     def __init__(self, rsetobj, north_dir):
         self.north_dir = north_dir
+        self.BTEcrop = rsetobj.BTEcrop
         self.unrotate = self._unrotation_funcs[north_dir]
         self.rotate = self._rotation_funcs[north_dir]
         super(RotatedRegionSet, self).__init__(rsetobj)
@@ -1795,7 +1806,7 @@ class RotatedRegionSet(RegionSetWrapper):
         return super(RotatedRegionSet, self).get_chunk_mtime(x, y, z)
 
     def iterate_chunks(self):
-        for x,y,z,mtime in super(RotatedRegionSet, self).iterate_chunks():
+        for x,y,z,mtime in super(RotatedRegionSet, self).iterate_chunks(self.BTEcrop):
             x,z = self.rotate(x,z)
             yield x,y,z,mtime
 
@@ -1823,11 +1834,10 @@ class CroppedRegionSet(RegionSetWrapper):
             raise ChunkDoesntExist("This chunk is out of the requested bounds")
 
     def iterate_chunks(self):
-        return ((x,y,z,mtime) for (x,y,z,mtime) in super(CroppedRegionSet,self).iterate_chunks()
-                if
-                    self.xmin <= x <= self.xmax and
-                    self.zmin <= z <= self.zmax
-                )
+        print("minmax", self.xmin, self.zmin, self.xmax, self.zmax)
+        for (x,y,z,mtime) in super(CroppedRegionSet,self).iterate_chunks():
+            if self.xmin <= x <= self.xmax and self.zmin <= z <= self.zmax:
+                yield (x,y,z,mtime)
 
     def iterate_newer_chunks(self, filemtime):
         return ((x,z,mtime) for (x,z,mtime) in super(CroppedRegionSet,self).iterate_newer_chunks(filemtime)
@@ -1871,7 +1881,7 @@ class CachedRegionSet(RegionSetWrapper):
     get_chunk()
 
     """
-    def __init__(self, rsetobj, cacheobjects):
+    def __init__(self, rsetobj, cacheobjects, BTEcrop=None):
         """Initialize this wrapper around the given regionset object and with
         the given list of cache objects. The cache objects may be shared among
         other CachedRegionSet objects.
@@ -1879,6 +1889,7 @@ class CachedRegionSet(RegionSetWrapper):
         """
         super(CachedRegionSet, self).__init__(rsetobj)
         self.caches = cacheobjects
+        self.BTEcrop = BTEcrop
 
         # Construct a key from the sequence of transformations and the real
         # RegionSet object, so that items we place in the cache don't conflict

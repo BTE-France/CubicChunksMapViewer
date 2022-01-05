@@ -480,12 +480,21 @@ def main():
     for render_name, render in renders.items():
         logging.debug("Found the following render thing: %r", render)
 
+        if render['BTEcrop'] is not None:
+            BTEcrop = []
+            for (xmin, zmin, xmax, zmax) in render['BTEcrop']:
+                if xmin >= xmax:
+                    xmin, xmax = xmax, xmin
+                if zmin >= zmax:
+                    zmin, zmax = zmax, zmin
+                BTEcrop.append((xmin//16, zmin//16, xmax//16, zmax//16))
+
         # find or create the world object
         try:
             w = worldcache[render['world']]
         except KeyError:
             try:
-                w = world.World(render['world'])
+                w = world.World(render['world'], BTEcrop)
             except CorruptNBTError as e:
                 logging.error("Failed to open world %r.", render['world'])
                 raise e
@@ -531,16 +540,16 @@ def main():
         
             # print(region_xmin, region_zmin, region_xmax, region_zmax)
 
-        rset = world.CachedRegionSet(rset, caches)
+        rset = world.CachedRegionSet(rset, caches, BTEcrop)
 
         # If a crop is requested, wrap the regionset here
-        if "crop" in render:
+        if "BTEcrop" in render:
+            rsets = [rset]
+        elif "crop" in render:
             rsets = []
             for zone in render['crop']:
                 rsets.append(world.CroppedRegionSet(rset, *zone))
-        elif "BTEcrop" in render:
-            rsets = []
-            rsets.append(world.BTECroppedRegionSet(rset, *render['BTEcrop']))
+        
         else:
             rsets = [rset]
 

@@ -4121,7 +4121,7 @@ def stone_brick(self, blockid, data):
 
 
 # huge brown/red mushrooms, and mushroom stems
-@material(blockid=[99, 100, 139], data=list(range(64)), solid=True)
+@material(blockid=[99, 100], data=list(range(64)), solid=True)
 def huge_mushroom(self, blockid, data):
     # Re-arrange the bits in data based on self.rotation
     # rotation  bit: 654321
@@ -4144,8 +4144,7 @@ def huge_mushroom(self, blockid, data):
 
     # texture generation
     texture_map = {99:  "brown_mushroom_block",
-                   100: "red_mushroom_block",
-                   139: "mushroom_stem"}
+                   100: "mushroom_stem",}
     cap =  self.load_image_texture("assets/minecraft/textures/block/%s.png" % texture_map[blockid])
     porous = self.load_image_texture("assets/minecraft/textures/block/mushroom_block_inside.png")
 
@@ -4711,24 +4710,10 @@ def beacon(self, blockid, data):
 
 # cobblestone and mossy cobblestone walls, chorus plants, mossy stone brick walls
 # one additional bit of data value added for mossy and cobblestone
-@material(blockid=[199]+list(range(1792, 1805 + 1)), data=list(range(32)), transparent=True, nospawn=True)
+@material(blockid=139, transparent=True, nospawn=True)
 def cobblestone_wall(self, blockid, data):
     walls_id_to_tex = {
-          199: "assets/minecraft/textures/block/chorus_plant.png", # chorus plants
-        1792: "assets/minecraft/textures/block/andesite.png",
-        1793: "assets/minecraft/textures/block/bricks.png",
-        1794: "assets/minecraft/textures/block/cobblestone.png",
-        1795: "assets/minecraft/textures/block/diorite.png",
-        1796: "assets/minecraft/textures/block/end_stone_bricks.png",
-        1797: "assets/minecraft/textures/block/granite.png",
-        1798: "assets/minecraft/textures/block/mossy_cobblestone.png",
-        1799: "assets/minecraft/textures/block/mossy_stone_bricks.png",
-        1800: "assets/minecraft/textures/block/nether_bricks.png",
-        1801: "assets/minecraft/textures/block/prismarine.png",
-        1802: "assets/minecraft/textures/block/red_nether_bricks.png",
-        1803: "assets/minecraft/textures/block/red_sandstone.png",
-        1804: "assets/minecraft/textures/block/sandstone.png",
-        1805: "assets/minecraft/textures/block/stone_bricks.png"
+        139: "assets/minecraft/textures/block/cobblestone.png",
     }
     t = self.load_image_texture(walls_id_to_tex[blockid]).copy()
 

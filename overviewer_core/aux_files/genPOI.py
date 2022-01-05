@@ -143,6 +143,8 @@ def parseBucketChunks(task_tuple):
             logging.warning("Ignoring POIs in corrupt chunk %d,%d.", b[0], b[1])
         except world.ChunkDoesntExist:
             pass
+        except TypeError:
+            pass
 
         # Perhaps only on verbose ?
         i = i + 1
@@ -531,9 +533,18 @@ def main():
         render['worldname_orig'] = render['world']
         render['world'] = worldpath
 
+        if render['BTEcrop'] is not None:
+            BTEcrop = []
+            for (xmin, zmin, xmax, zmax) in render['BTEcrop']:
+                if xmin >= xmax:
+                    xmin, xmax = xmax, xmin
+                if zmin >= zmax:
+                    zmin, zmax = zmax, zmin
+                BTEcrop.append((xmin//16, zmin//16, xmax//16, zmax//16))
+
         # find or create the world object
         if (render['world'] not in worldcache):
-            w = world.World(render['world'])
+            w = world.World(render['world'], BTEcrop)
             worldcache[render['world']] = w
         else:
             w = worldcache[render['world']]
