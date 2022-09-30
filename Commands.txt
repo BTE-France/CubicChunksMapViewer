@@ -1,5 +1,0 @@
-Generate Map:
-python.exe .\overviewer.py --config=config.py --forcerender
-
-Generate Markers:
-python.exe .\overviewer.py --config=config.py --genpoi --skip-players --skip-scan
