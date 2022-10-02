@@ -1,4 +1,6 @@
 import subprocess
+import time
 
-subprocess.run("sudo python3 overviewer.py --config=config.py --forcerender".split())
-subprocess.run("sudo python3 overviewer.py --config=config.py --genpoi --skip-players --skip-scan".split())
+start = time.time()
+end = time.time()
+print(f"Map was succesfully generated in {time.strftime('%H hour(s), %M minute(s) and %S second(s)', time.gmtime(end - start))}")
