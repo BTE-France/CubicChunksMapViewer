@@ -6,6 +6,8 @@ The project uses a forked version of the [CubicChunks Overviewer](https://github
 
 ## Usage
 
-To generate the map: ``python3 overviewer.py --config=config.py --forcerender``
+To generate the map: ``sudo python3 overviewer.py --config=config.py --forcerender``
 
-To generate the markers: ``python3 overviewer.py --config=config.py --genpoi --skip-players --skip-scan``
+To generate the markers: ``sudo python3 overviewer.py --config=config.py --genpoi --skip-players --skip-scan``
+
+Additionally, the ``launch.py`` script can be launched to execute all necessary commands.
