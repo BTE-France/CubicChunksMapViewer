@@ -1,4 +1,4 @@
-from ..classes import Region, Location, Marker
+from ..classes import Region, Marker
 
 REGION = Region(
     id="bfc",

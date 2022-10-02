@@ -1564,7 +1564,7 @@ class RegionSet(object):
         return chunk_data
 
 
-    def iterate_chunks(self, BTEcrop):
+    def iterate_chunks(self):
         """Returns an iterator over all chunk metadata in this world. Iterates
         over tuples of integers (x,y,z,mtime) for each chunk.  Other chunk data
         is not returned here.
@@ -1577,13 +1577,8 @@ class RegionSet(object):
                 logging.warning("Found a corrupt region file at %s,%s in %s, Skipping it.", regionx, regiony, self.regiondir)
                 continue
             for chunkx, chunky, chunkz in mcr.get_chunks():
-                # x, y, z = chunkx+16*regionx, chunky+16*regiony, chunkz+16*regionz
-                    # for (xmin, zmin, xmax, zmax) in BTEcrop:
-                        # if xmin <= x <= xmax and zmin <= z <= zmax:
-                            # yield x, y, z, mcr.get_chunk_timestamp(chunkx, chunky, chunkz)
-                            # break
-                yield chunkx+16*regionx, chunky+16*regiony, chunkz+16*regionz, mcr.get_chunk_timestamp(chunkx, chunky, chunkz)
-                
+                x, y, z = chunkx + 16 * regionx, chunky + 16 * regiony, chunkz + 16 * regionz
+                yield x, y, z, mcr.get_chunk_timestamp(chunkx, chunky, chunkz)
 
     def iterate_newer_chunks(self, mtime):
         """Returns an iterator over all chunk metadata in this world. Iterates
@@ -1659,15 +1654,35 @@ class RegionSet(object):
                 x = int(p[0])
                 y = int(p[1])
                 z = int(p[2])
-                if abs(x) > 500000 or abs(y) > 500000:
+                if abs(y) > 500000:
                     # logging.warning("Holy shit what is up with region file %s !?" % f)
                     pass
                 else:
-                    for (xmin, zmin, xmax, zmax) in self.BTEcrop:
-                        if xmin // 16 <= x <= xmax // 16 and zmin // 16 <= z <= zmax // 16:
-                            # print(x, y, z)
-                            yield (x, y, z, os.path.join(self.regiondir, f))
-                            break
+                    for chunk_coords in self.BTEcrop:
+                        if len(chunk_coords) == 6:  # Square region
+                            (xmin, zmin, xmax, zmax, y_min, y_max) = chunk_coords
+                            if (
+                                xmin // 16 <= x <= xmax // 16 and
+                                zmin // 16 <= z <= zmax // 16 and
+                                (not y_min or y_min // 16 <= y) and
+                                (not y_max or y <= y_max // 16)
+                            ):
+                                yield (x, y, z, os.path.join(self.regiondir, f))
+                                break
+                        elif len(chunk_coords) == 5:  # Round region
+                            # Credits to https://stackoverflow.com/a/7227057/5714132 for the optimization
+                            (_x, _z, radius, y_min, y_max) = chunk_coords
+                            if (not y_min or y_min // 16 <= y) and (not y_max or y <= y_max // 16):
+                                r = radius // 16
+                                dx, dz = abs(x - _x // 16), abs(z - _z // 16)
+                                if dx > r or dz > r:
+                                    continue
+                                if dx + dz <= r:
+                                    yield (x, y, z, os.path.join(self.regiondir, f))
+                                    break
+                                if dx**2 + dz**2 <= r**2:
+                                    yield (x, y, z, os.path.join(self.regiondir, f))
+                                    break                         
 
 
 class RegionSetWrapper(object):
@@ -1711,8 +1726,8 @@ class RegionSetWrapper(object):
         return self._r.get_biome_data(x,y,z)
     def get_chunk(self, x, y, z):
         return self._r.get_chunk(x,y,z)
-    def iterate_chunks(self, BTEcrop):
-        return self._r.iterate_chunks(BTEcrop)
+    def iterate_chunks(self):
+        return self._r.iterate_chunks()
     def iterate_newer_chunks(self,filemtime):
         return self._r.iterate_newer_chunks(filemtime)
     def get_chunk_mtime(self, x, y, z):
@@ -1807,7 +1822,7 @@ class RotatedRegionSet(RegionSetWrapper):
         return super(RotatedRegionSet, self).get_chunk_mtime(x, y, z)
 
     def iterate_chunks(self):
-        for x,y,z,mtime in super(RotatedRegionSet, self).iterate_chunks(self.BTEcrop):
+        for x,y,z,mtime in super(RotatedRegionSet, self).iterate_chunks():
             x,z = self.rotate(x,z)
             yield x,y,z,mtime
 

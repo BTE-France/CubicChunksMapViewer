@@ -256,17 +256,10 @@ def validateBTECrop(value):
 
     cropZones = []
     for zone in value:
-        if not isinstance(zone, tuple) or len(zone) != 4:
-            raise ValidationException("BTE crop must specify minregionx, minregionz, maxregionx, maxregionz in a tuple of length 4")
-            
-        a, b, c, d = tuple(int(x) for x in zone)
+        if not isinstance(zone, tuple) or len(zone) not in (5, 6):
+            raise ValidationException("BTE crop must be of length 5 (round) or 6 (square)")
 
-        if a >= c:
-            a, c = c, a
-        if b >= d:
-            b, d = d, b
-
-        cropZones.append((a, b, c, d))
+        cropZones.append(zone)
 
     return cropZones
 

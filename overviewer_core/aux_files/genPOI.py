@@ -535,12 +535,19 @@ def main():
 
         if render['BTEcrop'] is not None:
             BTEcrop = []
-            for (xmin, zmin, xmax, zmax) in render['BTEcrop']:
-                if xmin >= xmax:
-                    xmin, xmax = xmax, xmin
-                if zmin >= zmax:
-                    zmin, zmax = zmax, zmin
-                BTEcrop.append((xmin//16, zmin//16, xmax//16, zmax//16))
+            for coords in render['BTEcrop']:
+                if len(coords) == 6:  # Square region
+                    (xmin, zmin, xmax, zmax, y_min, y_max) = coords
+                    if xmin >= xmax:
+                        xmin, xmax = xmax, xmin
+                    if zmin >= zmax:
+                        zmin, zmax = zmax, zmin
+                    BTEcrop.append((xmin // 16, zmin // 16, xmax // 16, zmax // 16, y_min // 16 if y_min else None, y_max // 16 if y_max else None))
+                elif len(coords) == 5:  # Round region
+                    (x, z, radius, y_min, y_max) = coords
+                    BTEcrop.append((x // 16, z // 16, radius // 16, y_min // 16 if y_min else None, y_max // 16 if y_max else None))
+                else:
+                    raise ValueError(f"BTEcrop with arguments {coords} is invalid!")
 
         # find or create the world object
         if (render['world'] not in worldcache):
