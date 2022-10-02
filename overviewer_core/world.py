@@ -1660,7 +1660,8 @@ class RegionSet(object):
                 y = int(p[1])
                 z = int(p[2])
                 if abs(x) > 500000 or abs(y) > 500000:
-                    logging.warning("Holy shit what is up with region file %s !?" % f)
+                    # logging.warning("Holy shit what is up with region file %s !?" % f)
+                    pass
                 else:
                     for (xmin, zmin, xmax, zmax) in self.BTEcrop:
                         if xmin // 16 <= x <= xmax // 16 and zmin // 16 <= z <= zmax // 16:
