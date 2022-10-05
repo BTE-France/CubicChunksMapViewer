@@ -4,16 +4,16 @@ from dataclasses import dataclass
 
 @dataclass
 class SquareLocation:
-    x_min: int
-    z_min: int
-    x_max: int
-    z_max: int
-    y_min: int = None
-    y_max: int = None
+    x1: int
+    z1: int
+    x2: int
+    z2: int
+    y_min: int = -100
+    y_max: int = 5000
 
     @property
     def tuple(self):
-        return (self.x_min, self.z_min, self.x_max, self.z_max, self.y_min if self.y_min else -100, self.y_max if self.y_max else 5000)
+        return (self.x1, self.z1, self.x2, self.z2, self.y_min, self.y_max)
 
 
 @dataclass
@@ -21,12 +21,12 @@ class RoundLocation:
     x: int
     z: int
     radius: int
-    y_min: int = None
-    y_max: int = None
+    y_min: int = -100
+    y_max: int = 5000
 
     @property
     def tuple(self):
-        return (self.x, self.z, self.radius, self.y_min if self.y_min else -100, self.y_max if self.y_max else 5000)
+        return (self.x, self.z, self.radius, self.y_min, self.y_max)
 
 
 @dataclass

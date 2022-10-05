@@ -4,7 +4,7 @@ REGION = Region(
     id="mon",
     name="Monaco",
     locations=[
-        SquareLocation(x_min=3056586, z_min=-4355023, x_max=3057804, z_max=-4356325)
+        SquareLocation(x1=3056586, z1=-4355023, x2=3057804, z2=-4356325)
     ],
     markers=[
         Marker(name="Monte-Carlo", x=3057333, y=42, z=-4355815),
