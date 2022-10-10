@@ -1,10 +1,7 @@
-from typing import TYPE_CHECKING
+from bte_france.classes import Region, generate_borders
 from importlib import import_module
 import shutil
 import os
-
-if TYPE_CHECKING:
-    from bte_france.classes import Region
 
 
 worlds["BTEFrance"] = "./worlds/CCMap"  # noqa
@@ -31,6 +28,6 @@ renders["BTEFrance"] = {  # noqa
     "showlocationmarker": False,
     "center": [2793842, -4798093],
     "BTEcrop": [location.tuple for region in regions for location in region.locations],
-    "manualpois": [marker.dict for region in regions for marker in region.markers],
+    "manualpois": [marker.dict for region in regions for marker in region.markers] + generate_borders(),
     "markers": [region.markers_dict for region in regions]
 }

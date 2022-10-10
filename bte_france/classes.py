@@ -1,5 +1,6 @@
-from typing import Union
 from dataclasses import dataclass
+from typing import Union
+import json
 
 
 @dataclass
@@ -39,7 +40,7 @@ class Marker:
 
     @property
     def dict(self):
-        return {"id": self.region, "name": self.name, "x": self.x, "y": self.y + 780, "z": self.z, "icon": f"icons/{self.region}.png"}
+        return {"id": self.region, "text": self.name, "x": self.x, "y": self.y + 780, "z": self.z, "icon": f"icons/{self.region}.png"}
 
 
 @dataclass
@@ -54,8 +55,8 @@ class Region:
             marker.region = self.id
 
     def filter(self, poi):
-        if poi["id"] == self.id:
-            return poi["name"]
+        if poi["id"] == self.id or poi["id"] == "borders":
+            return poi
 
     @property
     def markers_dict(self):
@@ -66,3 +67,18 @@ class Region:
             "showIconInLegend": True,
             "icon": f"icons/{self.id}.png"
         }
+
+
+def generate_borders() -> list[dict]:
+    """Generate the borders of France"""
+    borders = []
+    with open("./bte_france/borders.json", 'r') as f:
+        borders_json = json.load(f)
+
+        for border in borders_json:
+            polyline = []
+            for x, z in border:
+                polyline.append({"x": x, "y": 0, "z": z})
+
+            borders.append({"id": "borders", "x": 0, "y": 0, "z": 0, "polyline": polyline})
+    return borders
