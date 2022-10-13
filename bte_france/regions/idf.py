@@ -8,7 +8,7 @@ REGION = Region(
         SquareLocation(x1=2846066, z1=-5055718, x2=2846742, z2=-5056132),  # Ile de la Grande Jatte
         SquareLocation(x1=2844142, z1=-5056766, x2=2845959, z2=-5055519),  # La Defense
         SquareLocation(x1=2885734, z1=-5040156, x2=2886111, z2=-5040388),  # Disneyland
-        RoundLocation(x=2883576, z=-5040745, radius=500),
+        RoundLocation(x=2883576, z=-5040745, radius=700),
     ],
     markers=[
         Marker(name="Tour Eiffel", x=2847555, y=34, z=-5051327),

@@ -8,9 +8,9 @@ REGION = Region(
         SquareLocation(x1=3130378, z1=-4925260, x2=3130771, z2=-4925863),
         SquareLocation(x1=3191234, z1=-4844378, x2=3191933, z2=-4845139),  # Turckheim
         RoundLocation(x=3191894, z=-4846043, radius=300),  # Niedermorschwihr
-        RoundLocation(x=3188937, z=-4829419, radius=400),  # Rouffach
+        RoundLocation(x=3188937, z=-4829419, radius=600),  # Rouffach
         RoundLocation(x=3244185, z=-4890006, radius=600),  # Strasbourg
-        RoundLocation(x=3167418, z=-4832093, radius=600),  # Markstein
+        RoundLocation(x=3167418, z=-4832093, radius=800),  # Markstein
         SquareLocation(x1=3144677, z1=-4986910, x2=3144946, z2=-4987125),  # Metz
         SquareLocation(x1=3147446, z1=-4982705, x2=3148024, z2=-4983259),  # Metz Technopôle
     ],
