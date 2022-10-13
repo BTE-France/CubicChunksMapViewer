@@ -70,15 +70,22 @@ class Region:
 
 
 def generate_borders() -> list[dict]:
-    """Generate the borders of France"""
+    """Generate the borders of France and its regions"""
+    borders_dict = {
+        "regional": (1, "#8A8A8A"),
+        "national": (2, "#D4D4D4")
+    }
+
     borders = []
-    with open("./bte_france/borders.json", 'r') as f:
-        borders_json = json.load(f)
+    for border_name, (weight, color) in borders_dict.items():
+        with open(f"./bte_france/{border_name}_borders.json", 'r') as f:
+            borders_json = json.load(f)
 
-        for border in borders_json:
-            polyline = []
-            for x, z in border:
-                polyline.append({"x": x, "y": 0, "z": z})
+            for border in borders_json:
+                polyline = []
+                for x, z in border:
+                    polyline.append({"x": x, "y": 0, "z": z})
 
-            borders.append({"id": "borders", "x": 0, "y": 0, "z": 0, "polyline": polyline})
+                borders.append({"id": "borders", "x": 0, "y": 0, "z": 0, "polyline": polyline, "weight": weight, "color": color})
+
     return borders

@@ -24,7 +24,7 @@ renders["BTEFrance"] = {  # noqa
     "title": "BTEFrance",
     "rendermode": normal,  # noqa
     "showspawn": False,
-    "minzoom": 3,
+    "minzoom": 4,
     "showlocationmarker": False,
     "center": [2793842, -4798093],
     "BTEcrop": [location.tuple for region in regions for location in region.locations],
