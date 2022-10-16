@@ -53,7 +53,7 @@ class Marker:
 
     @property
     def poi_dict(self):
-        return {"id": self.type, "text": self.name, "x": self.x, "y": self.y + Y_OFFSET, "z": self.z, "icon": f"icons/buildings/{self.type.name}.png"}
+        return {"id": self.type, "text": self.name, "x": self.x, "y": self.y + Y_OFFSET, "z": self.z, "icon": f"icons/buildings/{self.type.name.lower()}.png"}
 
     def filter(self, poi):
         if poi["id"] == self.type or poi["id"] == "borders":
@@ -68,7 +68,7 @@ class Marker:
             "filterFunction": self.filter,
             "checked": True,
             "showIconInLegend": True,
-            "icon": f"icons/buildings/{self.type.name}.png"
+            "icon": f"icons/buildings/{self.type.name.lower()}.png"
         }
 
     @staticmethod
