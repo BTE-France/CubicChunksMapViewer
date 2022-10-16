@@ -1,6 +1,19 @@
 from dataclasses import dataclass
+from enum import Enum
 from typing import Union
 import json
+
+Y_OFFSET = 250  # For some unknown reason, Overviewer does not output markers on the correct y-coord, so we manually add an offset
+
+
+class Type(str, Enum):
+    BUILDING = "Bâtiments"
+    CASTLE = "Châteaux"
+    CHURCH = "Cathédrales & Eglises"
+    CITY = "Villes"
+    MONUMENT = "Monuments"
+    PORT = "Ports"
+    VILLAGE = "Villages"
 
 
 @dataclass
@@ -36,37 +49,50 @@ class Marker:
     x: int
     y: int
     z: int
-    region: str = None
+    type: Type = None
 
     @property
-    def dict(self):
-        return {"id": self.region, "text": self.name, "x": self.x, "y": self.y + 780, "z": self.z, "icon": f"icons/{self.region}.png"}
+    def poi_dict(self):
+        return {"id": self.type, "text": self.name, "x": self.x, "y": self.y + Y_OFFSET, "z": self.z, "icon": f"icons/buildings/{self.type.name}.png"}
+
+    def filter(self, poi):
+        if poi["id"] == self.type or poi["id"] == "borders":
+            return poi
+
+    @property
+    def marker_dict(self):
+        if not self.type:
+            raise Exception(f"Marker named {self.name} is missing a type!")
+        return {
+            "name": self.type.value,
+            "filterFunction": self.filter,
+            "checked": True,
+            "showIconInLegend": True,
+            "icon": f"icons/buildings/{self.type.name}.png"
+        }
+
+    @staticmethod
+    def prefecture_dict():
+        return {
+            "name": "Préfectures",
+            "filterFunction": lambda poi: poi if poi["id"] == "prefecture" else None,
+            "checked": True,
+            "showIconInLegend": True,
+            "icon": "icons/buildings/prefecture.png"
+        }
 
 
 @dataclass
 class Region:
     id: str
     name: str
+    prefecture: Marker
     locations: list[Union[SquareLocation, RoundLocation]]
     markers: list[Marker]
 
-    def __post_init__(self):
-        for marker in self.markers:
-            marker.region = self.id
-
-    def filter(self, poi):
-        if poi["id"] == self.id or poi["id"] == "borders":
-            return poi
-
     @property
-    def markers_dict(self):
-        return {
-            "name": self.name,
-            "filterFunction": self.filter,
-            "checked": True,
-            "showIconInLegend": True,
-            "icon": f"icons/{self.id}.png"
-        }
+    def prefecture_dict(self):
+        return {"id": "prefecture", "text": self.prefecture.name, "x": self.prefecture.x, "y": self.prefecture.y + Y_OFFSET, "z": self.prefecture.z, "icon": f"icons/regions/{self.id}.png"}
 
 
 def generate_borders() -> list[dict]:

@@ -1,4 +1,4 @@
-from bte_france.classes import Region, generate_borders
+from bte_france.classes import Marker, Region, generate_borders
 from importlib import import_module
 import shutil
 import os
@@ -19,6 +19,18 @@ for file in os.listdir("./bte_france/regions"):
     if file.endswith(".py"):
         regions.append(getattr(import_module(f"bte_france.regions.{file[:-3]}"), "REGION"))
 
+BTEcrop, manualpois, markers = [], [], [Marker.prefecture_dict()]
+for region in regions:
+    manualpois.append(region.prefecture_dict)
+
+    for location in region.locations:
+        BTEcrop.append(location.tuple)
+
+    for marker in region.markers:
+        manualpois.append(marker.poi_dict)
+        markers.append(marker.marker_dict)
+markers.sort(key=lambda marker_dict: marker_dict["name"])
+
 renders["BTEFrance"] = {  # noqa
     "world": "BTEFrance",
     "title": "BTEFrance",
@@ -27,7 +39,7 @@ renders["BTEFrance"] = {  # noqa
     "minzoom": 4,
     "showlocationmarker": False,
     "center": [2793842, -4798093],
-    "BTEcrop": [location.tuple for region in regions for location in region.locations],
-    "manualpois": [marker.dict for region in regions for marker in region.markers] + generate_borders(),
-    "markers": [region.markers_dict for region in regions]
+    "BTEcrop": BTEcrop,
+    "manualpois": manualpois + generate_borders(),
+    "markers": markers
 }
