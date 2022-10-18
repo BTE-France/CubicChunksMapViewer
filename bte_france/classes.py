@@ -9,7 +9,7 @@ Y_OFFSET = 250  # For some unknown reason, Overviewer does not output markers on
 class Type(str, Enum):
     BUILDING = "Bâtiments"
     CASTLE = "Châteaux"
-    CHURCH = "Cathédrales & Eglises"
+    CHURCH = "Edifices Religieux"
     CITY = "Villes"
     MONUMENT = "Monuments"
     PORT = "Ports"

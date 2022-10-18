@@ -17,7 +17,7 @@ REGION = Region(
         Marker(name="Le Mont-Saint-Michel", x=2559924, y=6, z=-5127366, type=Type.MONUMENT),
         Marker(name="Honfleur", x=2718947, y=3, z=-5167362, type=Type.CITY),
         Marker(name="Bonsecours", x=2783910, y=145, z=-5144618, type=Type.CITY),
-        Marker(name="Cathédrale Notre-Dame de Rouen", x=2782355, y=15, z=-5147234, type=Type.MONUMENT),
+        Marker(name="Cathédrale Notre-Dame de Rouen", x=2782355, y=15, z=-5147234, type=Type.CHURCH),
         Marker(name="Pont Gustave Flaubert", x=2780304, y=15, z=-5148370, type=Type.MONUMENT),
         Marker(name="Grand Port Maritime de Rouen", x=2779705, y=6, z=-5148671, type=Type.PORT),
         Marker(name="Basilique Sainte-Thérèse de Lisieux", x=2707791, y=85, z=-5136009, type=Type.CHURCH),
