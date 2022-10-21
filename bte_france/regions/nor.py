@@ -1,4 +1,4 @@
-from ..classes import Region, Marker, SquareLocation, Type
+from ..classes import Region, Marker, SquareLocation, Type, RoundLocation
 
 REGION = Region(
     id="nor",
@@ -12,6 +12,7 @@ REGION = Region(
         SquareLocation(x1=2778857, z1=-5148826, x2=2780644, z2=-5148178),
         SquareLocation(x1=2707702, z1=-5136114, x2=2708011, z2=-5135866),  # Lisieux
         SquareLocation(x1=2572144, z1=-5128990, x2=2572514, z2=-5129262),  # Avranches
+        RoundLocation(x=2678349, z=-5164436, radius=100),  # Phare Ouistreham
     ],
     markers=[
         Marker(name="Le Mont-Saint-Michel", x=2559924, y=6, z=-5127366, type=Type.MONUMENT),
@@ -22,5 +23,6 @@ REGION = Region(
         Marker(name="Grand Port Maritime de Rouen", x=2779705, y=6, z=-5148671, type=Type.PORT),
         Marker(name="Basilique Sainte-Thérèse de Lisieux", x=2707791, y=85, z=-5136009, type=Type.CHURCH),
         Marker(name="Lycée Notre Dame de la Providence", x=2572263, y=60, z=-5129183, type=Type.BUILDING),
+        Marker(name="Phare de Ouistreham", x=2678349, y=6, z=-5164436, type=Type.LIGHTHOUSE),
     ]
 )

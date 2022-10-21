@@ -14,6 +14,7 @@ class Type(str, Enum):
     MONUMENT = "Monuments"
     PORT = "Ports"
     VILLAGE = "Villages"
+    LIGHTHOUSE = "Phares"
 
 
 @dataclass
