@@ -1649,40 +1649,12 @@ class RegionSet(object):
 
         logging.debug("regiondir is %s, has type %r", self.regiondir, self.type)
         for f in os.listdir(self.regiondir):
-            if re.match(r"-?\d+\.-?\d+\.-?\d+\.3dr$", f):
+            if f in self.BTEcrop:
                 p = f.split(".")
                 x = int(p[0])
                 y = int(p[1])
                 z = int(p[2])
-                if abs(y) > 500000:
-                    # logging.warning("Holy shit what is up with region file %s !?" % f)
-                    pass
-                else:
-                    for chunk_coords in self.BTEcrop:
-                        if len(chunk_coords) == 6:  # Square region
-                            (xmin, zmin, xmax, zmax, y_min, y_max) = chunk_coords
-                            if (
-                                xmin // 16 <= x <= xmax // 16 and
-                                zmin // 16 <= z <= zmax // 16 and
-                                (not y_min or y_min // 16 <= y) and
-                                (not y_max or y <= y_max // 16)
-                            ):
-                                yield (x, y, z, os.path.join(self.regiondir, f))
-                                break
-                        elif len(chunk_coords) == 5:  # Round region
-                            # Credits to https://stackoverflow.com/a/7227057/5714132 for the optimization
-                            (_x, _z, radius, y_min, y_max) = chunk_coords
-                            if (not y_min or y_min // 16 <= y) and (not y_max or y <= y_max // 16):
-                                r = radius // 16
-                                dx, dz = abs(x - _x // 16), abs(z - _z // 16)
-                                if dx > r or dz > r:
-                                    continue
-                                if dx + dz <= r:
-                                    yield (x, y, z, os.path.join(self.regiondir, f))
-                                    break
-                                if dx**2 + dz**2 <= r**2:
-                                    yield (x, y, z, os.path.join(self.regiondir, f))
-                                    break                         
+                yield (x, y, z, os.path.join(self.regiondir, f))                       
 
 
 class RegionSetWrapper(object):

@@ -49,6 +49,19 @@ helptext = """
 %(prog)s --config=<config file> [options]"""
 
 
+def is_point_in_circle(point: tuple[int, int], circle: tuple[int, int], radius):
+    # Credits to https://stackoverflow.com/a/7227057/5714132 for the optimization
+    dx, dz = abs(point[0] - circle[0]), abs(point[1] - circle[1])
+    if dx + dz <= radius:
+        return True
+    elif dx > radius or dz > radius:
+        return False
+    elif dx**2 + dz**2 <= radius**2:
+        return True
+    else:
+        return False
+
+
 def main():
     # bootstrap the logger with defaults
     logger.configure()
@@ -481,18 +494,38 @@ def main():
         logging.debug("Found the following render thing: %r", render)
 
         if render['BTEcrop'] is not None:
-            BTEcrop = []
+            BTEcrop = set()
+            # Create a set of region files that can be generated
             for coords in render['BTEcrop']:
                 if len(coords) == 6:  # Square region
-                    (xmin, zmin, xmax, zmax, y_min, y_max) = coords
-                    if xmin >= xmax:
-                        xmin, xmax = xmax, xmin
-                    if zmin >= zmax:
-                        zmin, zmax = zmax, zmin
-                    BTEcrop.append((xmin // 16, zmin // 16, xmax // 16, zmax // 16, y_min // 16 if y_min else None, y_max // 16 if y_max else None))
+                    x1, z1, x2, z2, y_min, y_max = coords
+                    if x2 < x1:
+                        x1, x2 = x2, x1
+                    if z2 < z1:
+                        z1, z2 = z2, z1
+                    x_reg_min, x_reg_max = x1 // 256, x2 // 256
+                    z_reg_min, z_reg_max = z1 // 256, z2 // 256
+                    for x in range(x_reg_min, x_reg_max + 1):
+                        for z in range(z_reg_min, z_reg_max + 1):
+                            for y in range(y_min // 256, y_max // 256 + 1):
+                                BTEcrop.add(f"{x}.{y}.{z}.3dr")
                 elif len(coords) == 5:  # Round region
-                    (x, z, radius, y_min, y_max) = coords
-                    BTEcrop.append((x // 16, z // 16, radius // 16, y_min // 16 if y_min else None, y_max // 16 if y_max else None))
+                    x_circle, z_circle, rad, y_min, y_max = coords
+                    x_max, x_min = x_circle + rad, x_circle - rad
+                    z_max, z_min = z_circle + rad, z_circle - rad
+                    x_min, x_max = x_min - x_min % 256, x_max - x_max % 256
+                    z_min, z_max = z_min - z_min % 256, z_max - z_max % 256
+                    for x in range(x_min, x_max + 1, 256):
+                        for z in range(z_min, z_max + 1, 256):
+                            p1, p2, p3, p4 = (x, z), (x + 256, z), (x + 256, z + 256), (x, z + 256)
+                            if (
+                                is_point_in_circle(p1, (x_circle, z_circle), rad) or
+                                is_point_in_circle(p2, (x_circle, z_circle), rad) or
+                                is_point_in_circle(p3, (x_circle, z_circle), rad) or
+                                is_point_in_circle(p4, (x_circle, z_circle), rad)
+                            ):
+                                for y in range(y_min // 256, y_max // 256 + 1):
+                                    BTEcrop.add(f"{x // 256}.{y}.{z // 256}.3dr")
                 else:
                     raise ValueError(f"BTEcrop with arguments {coords} is invalid!")
 
