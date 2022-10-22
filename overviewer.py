@@ -49,17 +49,31 @@ helptext = """
 %(prog)s --config=<config file> [options]"""
 
 
-def is_point_in_circle(point: tuple[int, int], circle: tuple[int, int], radius):
-    # Credits to https://stackoverflow.com/a/7227057/5714132 for the optimization
-    dx, dz = abs(point[0] - circle[0]), abs(point[1] - circle[1])
-    if dx + dz <= radius:
-        return True
-    elif dx > radius or dz > radius:
-        return False
-    elif dx**2 + dz**2 <= radius**2:
-        return True
+def is_square_in_circle(square: tuple[int, int], circle: tuple[int, int], radius: int):
+    """
+    Don't ask me how this works. Thank the stackoverflow legends.
+    https://stackoverflow.com/a/37084588/5714132
+    """
+    dx, dy = circle[0] - square[0], circle[1] - square[1]
+    squared_dist = 0
+
+    t = dx + 128
+    if t < 0:
+        squared_dist = t * t
     else:
-        return False
+        t = dx - 128
+        if t > 0:
+            squared_dist = t * t
+
+    t = dy + 128
+    if t < 0:
+        squared_dist += t * t
+    else:
+        t = dy - 128
+        if t > 0:
+            squared_dist += t * t
+
+    return squared_dist <= radius * radius
 
 
 def main():
@@ -517,13 +531,7 @@ def main():
                     z_min, z_max = z_min - z_min % 256, z_max - z_max % 256
                     for x in range(x_min, x_max + 1, 256):
                         for z in range(z_min, z_max + 1, 256):
-                            p1, p2, p3, p4 = (x, z), (x + 256, z), (x + 256, z + 256), (x, z + 256)
-                            if (
-                                is_point_in_circle(p1, (x_circle, z_circle), rad) or
-                                is_point_in_circle(p2, (x_circle, z_circle), rad) or
-                                is_point_in_circle(p3, (x_circle, z_circle), rad) or
-                                is_point_in_circle(p4, (x_circle, z_circle), rad)
-                            ):
+                            if is_square_in_circle((x + 128, z + 128), (x_circle, z_circle), rad):
                                 for y in range(y_min // 256, y_max // 256 + 1):
                                     BTEcrop.add(f"{x // 256}.{y}.{z // 256}.3dr")
                 else:
