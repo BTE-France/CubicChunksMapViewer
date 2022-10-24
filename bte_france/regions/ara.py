@@ -35,7 +35,7 @@ REGION = Region(
         Marker(name="Lycée René Descartes - Saint-Genis-Laval", x=2917534, y=230, z=-4636162, type=Type.BUILDING),
         Marker(name="Aéroport de Lyon-Bron", x=2930805, y=199, z=-4636703, type=Type.BUILDING),
         Marker(name="Saint-Symphorien-d'Ozon", x=2921991, y=178, z=-4627755, type=Type.CITY),
-        Marker(name="Lycée Notre Dame de Bellegarde - Neuville-sur-Saône", x=2928273, y=179, z=-46274654573755, type=Type.BUILDING),
+        Marker(name="Lycée Notre Dame de Bellegarde - Neuville-sur-Saône", x=2928273, y=179, z=-4654573, type=Type.BUILDING),
         Marker(name="Beaufort-sur-Doron", x=3056961, y=735, z=-4595334, type=Type.VILLAGE),
         Marker(name="Château de Miolans", x=3022104, y=538, z=-4589286, type=Type.CASTLE),
         Marker(name="Sorbiers", x=2884352, y=561, z=-4622241, type=Type.VILLAGE),
