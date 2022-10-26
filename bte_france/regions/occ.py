@@ -17,6 +17,7 @@ REGION = Region(
         SquareLocation(x1=2767480, z1=-4434090, x2=2767702, z2=-4434284),  # Montpellier
         SquareLocation(x1=2771932, z1=-4430868, x2=2772962, z2=-4430161),
         SquareLocation(x1=2783230, z1=-4470373, x2=2783873, z2=-4469376),  # St-Hippo
+        RoundLocation(x=2672252, z=-4332243, radius=100),  # Phare Cap Béar
     ],
     markers=[
         Marker(name="La Couvertoirade", x=2738325, y=774, z=-4478999, type=Type.VILLAGE),
@@ -32,5 +33,6 @@ REGION = Region(
         Marker(name="Esplanade de l'Europe", x=2772650, y=14, z=-4430430, type=Type.MONUMENT),
         Marker(name="Place du Nombre d'Or", x=2772062, y=21, z=-4430689, type=Type.MONUMENT),
         Marker(name="Saint-Hippolyte-du-Fort", x=2783583, y=158, z=-4469778, type=Type.VILLAGE),
+        Marker(name="Phare du Cap Béar", x=2672252, y=56, z=-4332243, type=Type.LIGHTHOUSE),
     ]
 )
