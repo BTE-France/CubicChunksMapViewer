@@ -6,8 +6,8 @@ REGION = Region(
     prefecture=Marker(name="Pays de la Loire - Nantes", x=2497741, y=15, z=-4973388),
     locations=[
         SquareLocation(x1=2591208, z1=-4926828, x2=2592287, z2=-4925960),  # Le Puy
-        SquareLocation(x1=2497561, z1=-4973011, x2=2497932, z2=-4973920),  # Nantes
-        SquareLocation(x1=2495613, z1=-4972300, x2=2496379, z2=-4973028),
+        SquareLocation(x1=2497561, z1=-4973011, x2=2498102, z2=-4973918),  # Nantes
+        SquareLocation(x1=2495613, z1=-4972300, x2=2496812, z2=-4973032),
         SquareLocation(x1=2498261, z1=-4972684, x2=2498657, z2=-4971976),
         SquareLocation(x1=2496920, z1=-4973408, x2=2497726, z2=-4972861),
         SquareLocation(x1=2451568, z1=-4997630, x2=2452456, z2=-4998524),  # St Nazaire

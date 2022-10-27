@@ -6,6 +6,7 @@ REGION = Region(
     prefecture=Marker(name="Île-de-France - Paris", x=2850830, y=34, z=-5050173),
     locations=[
         RoundLocation(x=2850640, z=-5050645, radius=6000),  # Paris
+        SquareLocation(x1=2856232, z1=-5048588, x2=2857106, z2=-5049545),
         SquareLocation(x1=2846066, z1=-5055718, x2=2846742, z2=-5056132),  # Ile de la Grande Jatte
         SquareLocation(x1=2844142, z1=-5056766, x2=2845959, z2=-5055519),  # La Defense
         SquareLocation(x1=2843124, z1=-5057916, x2=2844265, z2=-5056713),
