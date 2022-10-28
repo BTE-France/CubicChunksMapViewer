@@ -11,6 +11,7 @@ REGION = Region(
         SquareLocation(x1=2888865, z1=-5166498, x2=2889264, z2=-5166095),  # Amiens
         SquareLocation(x1=2887654, z1=-5168164, x2=2888302, z2=-5167167),
         RoundLocation(x=2841165, z=-5138319, radius=600),  # Gerberoy
+        SquareLocation(x1=2874314, z1=-5083877, x2=2875048, z2=-5084541),  # Chantilly
     ],
     markers=[
         Marker(name="Pierrefonds", x=2916708, y=111, z=-5089081, type=Type.CASTLE),
@@ -20,5 +21,6 @@ REGION = Region(
         Marker(name="Cathédrale Notre-Dame d'Amiens", x=2888025, y=33, z=-5167801, type=Type.CHURCH),
         Marker(name="Palais de Justice d'Amiens", x=2887953, y=37, z=-5167561, type=Type.MONUMENT),
         Marker(name="Gerberoy", x=2841103, y=178, z=-5138391, type=Type.VILLAGE),
+        Marker(name="Château de Chantilly", x=2874585, y=49, z=-5084120, type=Type.CASTLE),
     ]
 )

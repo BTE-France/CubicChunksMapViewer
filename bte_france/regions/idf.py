@@ -13,6 +13,8 @@ REGION = Region(
         SquareLocation(x1=2885734, z1=-5040156, x2=2886111, z2=-5040388),  # Disneyland
         RoundLocation(x=2883576, z=-5040745, radius=700),
         SquareLocation(x1=2866952, z1=-5007104, x2=2867642, z2=-5008272),  # Vaux-le-Vicomte
+        SquareLocation(x1=2830347, z1=-5050207, x2=2830687, z2=-5050604),  # Lanterne
+        SquareLocation(x1=2832229, z1=-5049362, x2=2832972, z2=-5050104),  # Versailles
     ],
     markers=[
         Marker(name="Tour Eiffel", x=2847555, y=34, z=-5051327, type=Type.MONUMENT),
@@ -36,5 +38,7 @@ REGION = Region(
         Marker(name="Dream Castle", x=2885909, y=120, z=-5040262, type=Type.BUILDING),
         Marker(name="Disneyland Paris", x=2883678, y=121, z=-5040777, type=Type.BUILDING),
         Marker(name="Château de Vaux-le-Vicomte", x=2867335, y=63, z=-5007901, type=Type.CASTLE),
+        Marker(name="Domaine de la Lanterne", x=2830593, y=114, z=-5050456, type=Type.BUILDING),
+        Marker(name="Château de Versailles", x=2832733, y=141, z=-5049696, type=Type.CASTLE),
     ]
 )
