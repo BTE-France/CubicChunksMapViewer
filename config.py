@@ -38,6 +38,7 @@ renders["BTEFrance"] = {  # noqa
     "showspawn": False,
     "minzoom": 4,
     "showlocationmarker": False,
+    "texturepath": "/home/maxyolo01/.minecraft/versions/1.16/1.16.jar",
     "center": [2793842, -4798093],
     "BTEcrop": BTEcrop,
     "manualpois": manualpois + generate_borders(),
