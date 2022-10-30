@@ -56,6 +56,28 @@ def generate_regional_borders():
         json.dump(out_borders, f, indent=2)
 
 
+def generate_outre_mer_borders():
+    IN_PATHS = [
+        "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions/guadeloupe/region-guadeloupe.geojson",
+        "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions/guyane/region-guyane.geojson",
+        "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions/la-reunion/region-la-reunion.geojson",
+        "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions/martinique/region-martinique.geojson",
+    ]
+    OUT_PATH = "./bte_france/outre_mer_borders.json"
+
+    print("Generating outre mer borders...")
+    out_borders = []
+    for IN_PATH in IN_PATHS:
+        borders_json = requests.get(IN_PATH).json()
+        for _border in borders_json["geometry"]["coordinates"]:
+            border = _border[0]  # Exclude "holes" within each border coordinates list
+            out_borders.append(convert_borders_to_mc(border))
+
+    with open(OUT_PATH, "w") as f:
+        json.dump(out_borders, f, indent=2)
+
+
 if __name__ == "__main__":
     generate_national_borders()
     generate_regional_borders()
+    generate_outre_mer_borders()
