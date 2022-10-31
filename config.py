@@ -42,6 +42,7 @@ renders["BTEFrance"] = {  # noqa
     "minzoom": 2,
     "defaultzoom": 6,
     "showlocationmarker": False,
+    "texturepath": settings["TEXTURE_PATH"],
     "center": [2793842, -4798093],
     "BTEcrop": BTEcrop,
     "manualpois": manualpois + generate_borders(),
