@@ -8,6 +8,7 @@ REGION = Region(
         RoundLocation(x=2959930, z=-4344971, radius=150),  # Cannet
         SquareLocation(x1=2874116, z1=-4357575, x2=2874474, z2=-4357353),  # If
         SquareLocation(x1=2877586, z1=-4358832, x2=2878555, z2=-4358017),  # Marseille
+        SquareLocation(x1=2878273, z1=-4359065, x2=2878570, z2=-4359297),
         RoundLocation(x=2985779, z=-4336791, radius=300),  # Bergerie
         SquareLocation(x1=3048429, z1=-4354537, x2=3048888, z2=-4354985),  # Beaulieu
         SquareLocation(x1=3064376, z1=-4357745, x2=3065013, z2=-4358214),  # Menton
@@ -17,6 +18,7 @@ REGION = Region(
         Marker(name="Île d'If", x=2874271, y=18, z=-4357455, type=Type.BUILDING),
         Marker(name="Hôtel de Ville Pavillon Daviel", x=2878357, y=1, z=-4358097, type=Type.MONUMENT),
         Marker(name="Cathédrale La Major", x=2878038, y=12, z=-4358556, type=Type.CHURCH),
+        Marker(name="Quartier La Joliette", x=2878433, y=4, z=-4359115, type=Type.CITY),
         Marker(name="Domaine de la Bergerie", x=2985684, y=31, z=-4336770, type=Type.BUILDING),
         Marker(name="Beaulieu-sur-Mer", x=3048648, y=23, z=-4354782, type=Type.VILLAGE),
         Marker(name="Menton", x=3064502, y=6, z=-4357987, type=Type.CITY),

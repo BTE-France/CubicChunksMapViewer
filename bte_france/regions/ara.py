@@ -5,13 +5,8 @@ REGION = Region(
     name="Auvergne-Rhône-Alpes",
     prefecture=Marker(name="Auvergne-Rhône-Alpes - Lyon", x=2923530, y=167, z=-4642334),
     locations=[
-        SquareLocation(x1=2922851, z1=-4642981, x2=2923138, z2=-4643310),  # Lyon
-        SquareLocation(x1=2924238, z1=-4642690, x2=2924748, z2=-4642979),
-        SquareLocation(x1=2924026, z1=-4643438, x2=2924319, z2=-4643232),
-        SquareLocation(x1=2922351, z1=-4644294, x2=2922702, z2=-4643976),
-        RoundLocation(x=2925298, z=-4642175, radius=150),
-        SquareLocation(x1=2924447, z1=-4641479, x2=2924717, z2=-4641244),
-        SquareLocation(x1=2921263, z1=-4640262, x2=2921880, z2=-4639367),
+        SquareLocation(x1=2920692, z1=-4639426, x2=2924652, z2=-4643769),  # Lyon
+        SquareLocation(x1=2924652, z1=-4643769, x2=2925139, z2=-4641040),
         SquareLocation(x1=2920354, z1=-4638486, x2=2920768, z2=-4638193),  # Oullins
         RoundLocation(x=2917639, z=-4636085, radius=400),  # St-Genis
         SquareLocation(x1=2931241, z1=-4637465, x2=2930392, z2=-4635153),  # Aéroport Bron

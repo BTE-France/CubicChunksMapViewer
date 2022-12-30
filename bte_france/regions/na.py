@@ -16,8 +16,7 @@ REGION = Region(
         SquareLocation(x1=2500576, z1=-4686660, x2=2501087, z2=-4686183),  # Libourne
         SquareLocation(x1=2473652, z1=-4685553, x2=2474097, z2=-4684994),  # Bordeaux
         SquareLocation(x1=2472842, z1=-4685594, x2=2473957, z2=-4685991),
-        SquareLocation(x1=2472287, z1=-4688007, x2=2472797, z2=-4687589),
-        SquareLocation(x1=2473241, z1=-4688066, x2=2473487, z2=-4687677),
+        SquareLocation(x1=2472278, z1=-4688206, x2=2473487, z2=-4687589),
         SquareLocation(x1=2475261, z1=-4688902, x2=2475837, z2=-4689671),
     ],
     markers=[

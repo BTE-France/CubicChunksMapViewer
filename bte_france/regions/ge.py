@@ -14,6 +14,8 @@ REGION = Region(
         RoundLocation(x=3167418, z=-4832093, radius=800),  # Markstein
         SquareLocation(x1=3144677, z1=-4986910, x2=3144946, z2=-4987125),  # Metz
         SquareLocation(x1=3147446, z1=-4982705, x2=3148024, z2=-4983259),  # Metz Technopôle
+        SquareLocation(x1=2952377, z1=-4972058, x2=2952701, z2=-4972475),  # Mery
+        RoundLocation(x=2997541, z=-4926888, radius=250),  # Nigloland
     ],
     markers=[
         Marker(name="Azelot", x=3130304, y=287, z=-4925138, type=Type.VILLAGE),
@@ -24,5 +26,7 @@ REGION = Region(
         Marker(name="Station du Markstein", x=3167482, y=1191, z=-4831814, type=Type.BUILDING),
         Marker(name="Cathédrale de Metz", x=3144764, y=178, z=-4986987, type=Type.CHURCH),
         Marker(name="Metz Technopôle", x=3147873, y=213, z=-4982774, type=Type.BUILDING),
+        Marker(name="Méry-sur-Seine", x=2952515, y=83, z=-4972188, type=Type.VILLAGE),
+        Marker(name="Nigloland", x=2997561, y=157, z=-4926900, type=Type.BUILDING),
     ]
 )

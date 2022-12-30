@@ -19,6 +19,7 @@ REGION = Region(
         SquareLocation(x1=2783230, z1=-4470373, x2=2783873, z2=-4469376),  # St-Hippo
         RoundLocation(x=2672252, z=-4332243, radius=100),  # Phare Cap Béar
         SquareLocation(x1=2568456, z1=-4517327, x2=2568755, z2=-4517578),  # Larra
+        RoundLocation(x=2770240, z=-4467122, radius=300),  # Agonès
     ],
     markers=[
         Marker(name="La Couvertoirade", x=2738325, y=774, z=-4478999, type=Type.VILLAGE),
@@ -36,5 +37,6 @@ REGION = Region(
         Marker(name="Saint-Hippolyte-du-Fort", x=2783583, y=158, z=-4469778, type=Type.VILLAGE),
         Marker(name="Phare du Cap Béar", x=2672252, y=56, z=-4332243, type=Type.LIGHTHOUSE),
         Marker(name="Larra", x=2568626, y=162, z=-4517443, type=Type.VILLAGE),
+        Marker(name="Agonès", x=2770311, y=159, z=-4467083, type=Type.VILLAGE),
     ]
 )
