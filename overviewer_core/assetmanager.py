@@ -210,7 +210,7 @@ top-level directory.
         indexpath = os.path.join(self.outputdir, "index.html")
 
         index = codecs.open(indexpath, 'r', encoding='UTF-8').read()
-        index = index.replace("{title}", "Minecraft Overviewer")
+        index = index.replace("{title}", "BTE France Map")
         index = index.replace("{time}", time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime()))
         versionstr = "%s (%s)" % (util.findGitVersion(),
                                   util.findGitHash()[:7])
