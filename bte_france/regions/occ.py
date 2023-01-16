@@ -5,6 +5,7 @@ REGION = Region(
     name="Occitanie",
     prefecture=Marker(name="Occitanie - Toulouse", x=2579836, y=143, z=-4496947),
     locations=[
+        SquareLocation(x1=2579746, z1=-4497034, x2=2580151, z2=-4496767),  # Toulouse
         RoundLocation(x=2738325, z=-4478999, radius=200),  # La Couvertoirade
         SquareLocation(x1=2457563, z1=-4485681, x2=2458074, z2=-4485238),  # Vielle-Adour
         RoundLocation(x=2590113, z=-4582903, radius=200),  # Montcuq
