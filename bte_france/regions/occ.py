@@ -17,7 +17,7 @@ REGION = Region(
         SquareLocation(x1=2749138, z1=-4413423, x2=2750014, z2=-4412473),  # Sète
         SquareLocation(x1=2767480, z1=-4434090, x2=2767702, z2=-4434284),  # Montpellier
         SquareLocation(x1=2771932, z1=-4430868, x2=2772962, z2=-4430161),
-        SquareLocation(x1=2783230, z1=-4470373, x2=2783873, z2=-4469376),  # St-Hippo
+        SquareLocation(x1=2784098, z1=-4469181, x2=2782781, z2=-4470585),  # St-Hippo
         RoundLocation(x=2672252, z=-4332243, radius=100),  # Phare Cap Béar
         SquareLocation(x1=2568456, z1=-4517327, x2=2568755, z2=-4517578),  # Larra
         RoundLocation(x=2770240, z=-4467122, radius=300),  # Agonès

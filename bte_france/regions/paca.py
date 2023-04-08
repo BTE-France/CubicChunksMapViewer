@@ -7,7 +7,7 @@ REGION = Region(
     locations=[
         RoundLocation(x=2959930, z=-4344971, radius=150),  # Cannet
         SquareLocation(x1=2874116, z1=-4357575, x2=2874474, z2=-4357353),  # If
-        SquareLocation(x1=2877586, z1=-4358832, x2=2878555, z2=-4358017),  # Marseille
+        SquareLocation(x1=2877300, z1=-4358838, x2=2878914, z2=-4357471),  # Marseille
         SquareLocation(x1=2878273, z1=-4359065, x2=2878570, z2=-4359297),
         RoundLocation(x=2985779, z=-4336791, radius=300),  # Bergerie
         SquareLocation(x1=3048429, z1=-4354537, x2=3048888, z2=-4354985),  # Beaulieu
