@@ -1,11 +1,11 @@
-from ..classes import Region, Marker, SquareLocation, RoundLocation, Type
+from ..classes import Marker, Region, RoundLocation, SquareLocation, Type
 
 REGION = Region(
     id="reu",
     name="La Réunion",
     prefecture=Marker(name="La Réunion - Saint-Denis", x=10619889, y=7, z=3133503),
     locations=[
-        SquareLocation(x1=10617478, z1=3133919, x2=10617879, z2=3134450),  # St-Denis
+        SquareLocation(x1=10617478, z1=3133919, x2=10618268, z2=3134714),  # St-Denis
         RoundLocation(x=10614976, z=3164957, radius=250),  # St-Gilles
     ],
     markers=[
